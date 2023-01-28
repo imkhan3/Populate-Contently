@@ -4,6 +4,7 @@ import json
 import googletrans 
 import sys
 import re
+import arabic_reshaper
 import pyarabic.araby as araby
 import io
 
@@ -25,38 +26,20 @@ def translate_arabic_sentence(sentence):
     
     return translation_dict
 
+print("stripping diacritics")
 # Test the function
-arabic_sentence = 'عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ صلى الله عليه وسلم يَقُولُ: " إنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إلَى مَا هَاجَرَ إلَيْهِ". رَوَاهُ إِمَامَا الْمُحَدِّثِينَ أَبُو عَبْدِ اللهِ مُحَمَّدُ بنُ إِسْمَاعِيل بن إِبْرَاهِيم بن الْمُغِيرَة بن بَرْدِزبَه الْبُخَارِيُّ الْجُعْفِيُّ [رقم:1]، وَأَبُو الْحُسَيْنِ مُسْلِمٌ بنُ الْحَجَّاج بن مُسْلِم الْقُشَيْرِيُّ النَّيْسَابُورِيُّ [رقم:1907] رَضِيَ اللهُ عَنْهُمَا فِي "صَحِيحَيْهِمَا" اللذَينِ هُمَا أَصَحُّ الْكُتُبِ الْمُصَنَّفَةِ.'
+arabic_sentence = '''
+عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللَّهِ بْنِ مَسْعُودٍ رَضِيَ اللهُ عَنْهُ قَالَ: حَدَّثَنَا رَسُولُ اللَّهِ صلى الله عليه و سلم -وَهُوَ الصَّادِقُ الْمَصْدُوقُ-: "إنَّ أَحَدَكُمْ يُجْمَعُ خَلْقُهُ فِي بَطْنِ أُمِّهِ أَرْبَعِينَ يَوْمًا نُطْفَةً، ثُمَّ يَكُونُ عَلَقَةً مِثْلَ ذَلِكَ، ثُمَّ يَكُونُ مُضْغَةً مِثْلَ ذَلِكَ، ثُمَّ يُرْسَلُ إلَيْهِ الْمَلَكُ فَيَنْفُخُ فِيهِ الرُّوحَ، وَيُؤْمَرُ بِأَرْبَعِ كَلِمَاتٍ: بِكَتْبِ رِزْقِهِ، وَأَجَلِهِ، وَعَمَلِهِ، وَشَقِيٍّ أَمْ سَعِيدٍ؛ فَوَاَللَّهِ الَّذِي لَا إلَهَ غَيْرُهُ إنَّ أَحَدَكُمْ لَيَعْمَلُ بِعَمَلِ أَهْلِ الْجَنَّةِ حَتَّى مَا يَكُونُ بَيْنَهُ وَبَيْنَهَا إلَّا ذِرَاعٌ فَيَسْبِقُ عَلَيْهِ الْكِتَابُ فَيَعْمَلُ بِعَمَلِ أَهْلِ النَّارِ فَيَدْخُلُهَا. وَإِنَّ أَحَدَكُمْ لَيَعْمَلُ بِعَمَلِ أَهْلِ النَّارِ حَتَّى مَا يَكُونُ بَيْنَهُ وَبَيْنَهَا إلَّا ذِرَاعٌ فَيَسْبِقُ عَلَيْهِ الْكِتَابُ فَيَعْمَلُ بِعَمَلِ أَهْلِ الْجَنَّةِ فَيَدْخُلُهَا".
+'''
 arabic_sentence = araby.strip_diacritics(arabic_sentence)
+reshaped_text = arabic_reshaper.reshape(arabic_sentence)
+print("translating")
+dictionary  = translate_arabic_sentence(reshaped_text)
 
-# dictionary  = translate_arabic_sentence(arabic_sentence)
-dictionary = {'عن': 'About', 'أمير': 'Prince', 'المؤمنين': 'Believers', 'أبي': 'My Father', 'حفص': 'Hamper', 'عمر': 'Omar', 'بن': 'The son of', 'الخطاب': 'the speech', 'رضي': 'satisfied', 'الله': 'Allah', 'عنه': 'about him', 'قال': 'He said', 'سمعت': 'I heard', 'رسول': 'messenger', 'صلى': 'pray', 'عليه': 'on him', 'وسلم': 'Greet', 'يقول': 'Says', 'إنما': 'But', 'الأعمال': 'Business', 'بالنيات': 'With intentions', 'وإنما': 'But but', 'لكل': 'for every', 'امرئ': 'Person', 'ما': 'what', 'نوى': 'Intend', 'فمن': 'Not', 'كانت': 'She was', 'هجرته': 'Migrate', 'إلى': 'to me', 'ورسوله': 'And his Messenger', 'فهجرته': 'I migrate it', 'ومن': 'And from', 'لدنيا': 'Worldly', 'يصيبها': 'It affects it', 'أو': 'or', 'امرأة': 'woman', 'ينكحها': 'Blind it', 'هاجر': 'Emigrated', 'إليه': 'mechanism', 'رواه': 'Narrate', 'إماما': 'Imam', 'المحدثين': 'Modernist', 'أبو': 'Father', 'عبد': 'Slave', 'محمد': 'Mohammed', 'إسماعيل': 'Ismael', 'إبراهيم': 'Ibrahim', 'المغيرة': 'Heaving', 'بردزبه': 'Bardahbah', 'البخاري': 'Bukhari', 'الجعفي': 'Jaafi', 'رقم': 'number', '1': '1', 'وأبو': 'And Abu', 'الحسين': 'ELHussein', 'مسلم': 'Muslim', 'الحجاج': 'Pilgrims', 'القشيري': 'Al -Qushairi', 'النيسابوري': 'Nisaburi', '1907': '1907', 'عنهما': 'About them', 'في': 'in', 'صحيحيهما': 'Correct them', 'اللذين': 'who', 'هما': 'They', 'أصح': 'More correct', 'الكتب': 'Books', 'المصنفة': 'Classified'}
-json_data = json.dumps(dictionary)
-with open("dictionary.json", "w") as json_file:
-    json.dump(dictionary, json_file)
-
-with open("dictionary.json", "r") as file:
-    data = json.load(file)
-    print(data)
+print("appending JSON")
+with open('dictionary.json', 'a', encoding='utf8') as file:
+    # use json.dump to write the new data to the file
+    json.dump(dictionary, file, indent=None, ensure_ascii=False)
+    # add a newline character to write the next item on a new line
+    file.write('\n')
 # print(dictionary)
-
-
-# words_json = json.dumps(words_dict)
-
-# # Set the headers for the Contentful API
-# headers = {
-#     "Content-Type": "application/json",
-#     "Authorization": "Bearer <ACCESS_TOKEN>"
-# }
-
-# # Set the endpoint for the Contentful API
-# endpoint = "https://api.contentful.com/spaces/u2mxtfs4ey3o/entries"
-
-# # Post the JSON object to the Contentful API
-# response = requests.post(endpoint, headers=headers, data=words_json)
-
-# # Check the status code of the response
-# if response.status_code == 200:
-#     print("JSON object successfully posted to Contentful")
-# else:
-#     print("Error posting JSON object to Contentful: ", response.status_code)
