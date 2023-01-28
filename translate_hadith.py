@@ -29,8 +29,16 @@ def translate_arabic_sentence(sentence):
 arabic_sentence = 'عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ صلى الله عليه وسلم يَقُولُ: " إنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إلَى مَا هَاجَرَ إلَيْهِ". رَوَاهُ إِمَامَا الْمُحَدِّثِينَ أَبُو عَبْدِ اللهِ مُحَمَّدُ بنُ إِسْمَاعِيل بن إِبْرَاهِيم بن الْمُغِيرَة بن بَرْدِزبَه الْبُخَارِيُّ الْجُعْفِيُّ [رقم:1]، وَأَبُو الْحُسَيْنِ مُسْلِمٌ بنُ الْحَجَّاج بن مُسْلِم الْقُشَيْرِيُّ النَّيْسَابُورِيُّ [رقم:1907] رَضِيَ اللهُ عَنْهُمَا فِي "صَحِيحَيْهِمَا" اللذَينِ هُمَا أَصَحُّ الْكُتُبِ الْمُصَنَّفَةِ.'
 arabic_sentence = araby.strip_diacritics(arabic_sentence)
 
-words_dict  = translate_arabic_sentence(arabic_sentence)
-print(words_dict)
+# dictionary  = translate_arabic_sentence(arabic_sentence)
+dictionary = {'عن': 'About', 'أمير': 'Prince', 'المؤمنين': 'Believers', 'أبي': 'My Father', 'حفص': 'Hamper', 'عمر': 'Omar', 'بن': 'The son of', 'الخطاب': 'the speech', 'رضي': 'satisfied', 'الله': 'Allah', 'عنه': 'about him', 'قال': 'He said', 'سمعت': 'I heard', 'رسول': 'messenger', 'صلى': 'pray', 'عليه': 'on him', 'وسلم': 'Greet', 'يقول': 'Says', 'إنما': 'But', 'الأعمال': 'Business', 'بالنيات': 'With intentions', 'وإنما': 'But but', 'لكل': 'for every', 'امرئ': 'Person', 'ما': 'what', 'نوى': 'Intend', 'فمن': 'Not', 'كانت': 'She was', 'هجرته': 'Migrate', 'إلى': 'to me', 'ورسوله': 'And his Messenger', 'فهجرته': 'I migrate it', 'ومن': 'And from', 'لدنيا': 'Worldly', 'يصيبها': 'It affects it', 'أو': 'or', 'امرأة': 'woman', 'ينكحها': 'Blind it', 'هاجر': 'Emigrated', 'إليه': 'mechanism', 'رواه': 'Narrate', 'إماما': 'Imam', 'المحدثين': 'Modernist', 'أبو': 'Father', 'عبد': 'Slave', 'محمد': 'Mohammed', 'إسماعيل': 'Ismael', 'إبراهيم': 'Ibrahim', 'المغيرة': 'Heaving', 'بردزبه': 'Bardahbah', 'البخاري': 'Bukhari', 'الجعفي': 'Jaafi', 'رقم': 'number', '1': '1', 'وأبو': 'And Abu', 'الحسين': 'ELHussein', 'مسلم': 'Muslim', 'الحجاج': 'Pilgrims', 'القشيري': 'Al -Qushairi', 'النيسابوري': 'Nisaburi', '1907': '1907', 'عنهما': 'About them', 'في': 'in', 'صحيحيهما': 'Correct them', 'اللذين': 'who', 'هما': 'They', 'أصح': 'More correct', 'الكتب': 'Books', 'المصنفة': 'Classified'}
+json_data = json.dumps(dictionary)
+with open("dictionary.json", "w") as json_file:
+    json.dump(dictionary, json_file)
+
+with open("dictionary.json", "r") as file:
+    data = json.load(file)
+    print(data)
+# print(dictionary)
 
 
 # words_json = json.dumps(words_dict)
