@@ -35,7 +35,7 @@ arabic_sentence = araby.strip_diacritics(arabic_sentence)
 reshaped_text = arabic_reshaper.reshape(arabic_sentence)
 print("translating")
 dictionary  = translate_arabic_sentence(reshaped_text)
-
+# APPEND
 print("appending JSON")
 with open('dictionary.json', 'a', encoding='utf8') as file:
     # use json.dump to write the new data to the file
